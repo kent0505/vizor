@@ -30,6 +30,8 @@ class CityTile extends StatelessWidget {
       child: Button(
         onPressed: () {
           context.read<CityBloc>().add(SelectCity(city: city));
+          // load restaurants
+          // context.read();
         },
         child: Row(
           children: [

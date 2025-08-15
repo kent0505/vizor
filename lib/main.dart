@@ -12,6 +12,7 @@ import 'src/features/auth/bloc/auth_bloc.dart';
 import 'src/features/auth/data/auth_repository.dart';
 import 'src/features/city/bloc/city_bloc.dart';
 import 'src/features/city/data/city_repository.dart';
+import 'src/features/home/bloc/home_bloc.dart';
 
 // final colors = Theme.of(context).extension<MyColors>()!;
 
@@ -58,6 +59,7 @@ void main() async {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (context) => HomeBloc()),
           BlocProvider(
             create: (context) => AuthBloc(
               repository: context.read<AuthRepository>(),

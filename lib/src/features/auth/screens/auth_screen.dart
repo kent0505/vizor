@@ -27,13 +27,14 @@ class _AuthScreenState extends State<AuthScreen> {
   bool code = false;
 
   void onContinue() {
+    final bloc = context.read<AuthBloc>();
     if (code) {
-      context.read<AuthBloc>().add(LoginEvent(
-            phone: phoneController.text,
-            code: codeController.text,
-          ));
+      bloc.add(LoginEvent(
+        phone: phoneController.text,
+        code: codeController.text,
+      ));
     } else {
-      context.read<AuthBloc>().add(SendCodeEvent(phone: phoneController.text));
+      bloc.add(SendCodeEvent(phone: phoneController.text));
       setState(() {
         code = true;
       });
@@ -55,6 +56,7 @@ class _AuthScreenState extends State<AuthScreen> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             logger(state.runtimeType);
+
             if (state is Logined) {
               context.replace(HomeScreen.routePath);
             }
@@ -76,8 +78,6 @@ class _AuthScreenState extends State<AuthScreen> {
                     ? Pinput(
                         length: 5,
                         controller: codeController,
-                        errorText:
-                            state is AuthError ? 'Code is incorrect' : null,
                       )
                     : TxtField(
                         controller: phoneController,
