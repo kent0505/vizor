@@ -5,4 +5,6 @@ sealed class HomeState {}
 
 final class HomeInitial extends HomeState {}
 
+final class HomeFavorite extends HomeState {}
+
 final class HomeSettings extends HomeState {}

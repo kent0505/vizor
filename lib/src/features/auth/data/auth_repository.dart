@@ -9,8 +9,8 @@ abstract interface class AuthRepository {
   const AuthRepository();
 
   bool isExpired();
-  Future<bool> sendCode(String phone);
-  Future<bool> login(
+  Future<void> sendCode(String phone);
+  Future<void> login(
     String phone,
     String code,
   );
@@ -38,7 +38,7 @@ final class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<bool> sendCode(String phone) async {
+  Future<void> sendCode(String phone) async {
     final response = await _dio.post(
       '/api/v1/auth/send_code',
       data: {
@@ -46,13 +46,13 @@ final class AuthRepositoryImpl implements AuthRepository {
       },
     );
 
-    if (response.statusCode == 200) return true;
+    if (response.statusCode == 200) return;
 
     throw Exception(response.data['detail']);
   }
 
   @override
-  Future<bool> login(
+  Future<void> login(
     String phone,
     String code,
   ) async {
@@ -68,7 +68,7 @@ final class AuthRepositoryImpl implements AuthRepository {
       final auth = Auth.fromJson(response.data);
       await _prefs.setString(Keys.token, auth.token);
       await _prefs.setString(Keys.role, auth.role);
-      return true;
+      return;
     }
 
     throw Exception(response.data['detail']);

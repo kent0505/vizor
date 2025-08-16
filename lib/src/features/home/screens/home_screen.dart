@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/utils.dart';
-import '../../../core/widgets/button.dart';
 import '../../../core/widgets/loading_widget.dart';
-import '../../../core/widgets/main_button.dart';
 import '../../city/bloc/city_bloc.dart';
 import '../../city/data/city_repository.dart';
 import '../../city/screens/select_city_screen.dart';
+import '../../restaurant/bloc/restaurant_bloc.dart';
+import '../../restaurant/widgets/restaurant_card.dart';
 import '../../settings/screens/settings_screen.dart';
 import '../bloc/home_bloc.dart';
 import '../widgets/home_appbar.dart';
@@ -36,6 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkCity();
     });
+    context.read<CityBloc>().add(GetCities());
+    context
+        .read<RestaurantBloc>()
+        .add(GetRestaurants(city: context.read<CityRepository>().getCity()));
   }
 
   @override
@@ -80,38 +84,32 @@ class _Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 100),
-        BlocBuilder<CityBloc, CityState>(
-          builder: (context, state) {
-            if (state is CityLoading) {
-              return const LoadingWidget();
-            }
+    return BlocBuilder<RestaurantBloc, RestaurantState>(
+      builder: (context, state) {
+        if (state is RestaurantLoading) {
+          return const LoadingWidget();
+        }
 
-            if (state is CityLoaded) {
-              return Button(
-                onPressed: () {
-                  context.push(SelectCityScreen.routePath);
-                },
-                child: Text(
-                  state.selectedCity.name,
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
+        if (state is RestaurantsLoaded) {
+          return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: state.restaurants.length,
+            itemBuilder: (context, index) {
+              return RestaurantCard(
+                restaurant: state.restaurants[index],
               );
-            }
+            },
+          );
+        }
 
-            return MainButton(
-              title: 'Choose city',
-              onPressed: () {
-                context.push(SelectCityScreen.routePath);
-              },
-            );
-          },
-        ),
-      ],
+        if (state is RestaurantError) {
+          return Center(
+            child: Text(state.error),
+          );
+        }
+
+        return const SizedBox();
+      },
     );
   }
 }

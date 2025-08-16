@@ -16,3 +16,9 @@ final class CityLoaded extends CityState {
   final List<City> cities;
   final City selectedCity;
 }
+
+final class CityError extends CityState {
+  CityError({required this.error});
+
+  final String error;
+}

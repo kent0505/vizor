@@ -18,6 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) {
     if (event.index == 1) emit(HomeInitial());
-    if (event.index == 2) emit(HomeSettings());
+    if (event.index == 2) emit(HomeFavorite());
+    if (event.index == 3) emit(HomeSettings());
   }
 }

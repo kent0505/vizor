@@ -13,8 +13,12 @@ abstract final class AppFonts {
 
 abstract final class Assets {
   static const back = 'assets/back.svg';
-  static const home = 'assets/home.svg';
-  static const settings = 'assets/settings.svg';
+  static const home1 = 'assets/home1.svg';
+  static const home2 = 'assets/home2.svg';
+  static const favorite1 = 'assets/favorite1.svg';
+  static const favorite2 = 'assets/favorite2.svg';
+  static const settings1 = 'assets/settings1.svg';
+  static const settings2 = 'assets/settings2.svg';
 }
 
 abstract final class Keys {

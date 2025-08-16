@@ -38,3 +38,7 @@ extension FirstWhereOrNullExtension<T> on Iterable<T> {
     return null;
   }
 }
+
+String getImage(String? photo) {
+  return '${Env.s3Url}/${Env.s3Bucket}/$photo';
+}

@@ -31,6 +31,12 @@ class SelectCityScreen extends StatelessWidget {
             );
           }
 
+          if (state is CityError) {
+            return Center(
+              child: Text(state.error),
+            );
+          }
+
           return const SizedBox();
         },
       ),

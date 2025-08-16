@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants.dart';
 import '../../../core/widgets/button.dart';
 import '../../../core/widgets/loading_widget.dart';
-import '../../../core/widgets/main_button.dart';
 import '../../city/bloc/city_bloc.dart';
 import '../../city/screens/select_city_screen.dart';
 import '../bloc/home_bloc.dart';
@@ -33,6 +32,7 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
         child: Text(
           switch (state) {
             HomeInitial() => 'Home',
+            HomeFavorite() => 'Favorites',
             HomeSettings() => 'Settings',
           },
           style: const TextStyle(
@@ -45,10 +45,6 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         BlocBuilder<CityBloc, CityState>(
           builder: (context, state) {
-            if (state is CityLoading) {
-              return const LoadingWidget();
-            }
-
             if (state is CityLoaded) {
               return Button(
                 onPressed: () {
@@ -63,12 +59,7 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
               );
             }
 
-            return MainButton(
-              title: 'Choose city',
-              onPressed: () {
-                context.push(SelectCityScreen.routePath);
-              },
-            );
+            return const LoadingWidget();
           },
         ),
       ],

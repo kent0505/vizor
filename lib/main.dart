@@ -13,6 +13,8 @@ import 'src/features/auth/data/auth_repository.dart';
 import 'src/features/city/bloc/city_bloc.dart';
 import 'src/features/city/data/city_repository.dart';
 import 'src/features/home/bloc/home_bloc.dart';
+import 'src/features/restaurant/bloc/restaurant_bloc.dart';
+import 'src/features/restaurant/data/restaurant_repository.dart';
 
 // final colors = Theme.of(context).extension<MyColors>()!;
 
@@ -56,6 +58,12 @@ void main() async {
             dio: dio,
           ),
         ),
+        RepositoryProvider<RestaurantRepository>(
+          create: (context) => RestaurantRepositoryImpl(
+            prefs: prefs,
+            dio: dio,
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -68,6 +76,11 @@ void main() async {
           BlocProvider(
             create: (context) => CityBloc(
               repository: context.read<CityRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => RestaurantBloc(
+              repository: context.read<RestaurantRepository>(),
             ),
           ),
         ],

@@ -9,8 +9,8 @@ class Auth {
 
   factory Auth.fromJson(Map<String, dynamic> json) {
     return Auth(
-      token: json['access_token'] as String,
-      role: json['role'] as String,
+      token: json['access_token'],
+      role: json['role'],
     );
   }
 

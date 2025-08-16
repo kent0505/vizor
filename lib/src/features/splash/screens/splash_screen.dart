@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../auth/data/auth_repository.dart';
 import '../../auth/screens/auth_screen.dart';
-import '../../city/bloc/city_bloc.dart';
 import '../../home/screens/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,11 +19,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     final isExpired = context.read<AuthRepository>().isExpired();
-
-    if (!isExpired) {
-      context.read<CityBloc>().add(GetCities());
-    }
-
     Future.delayed(
       const Duration(seconds: 2),
       () {

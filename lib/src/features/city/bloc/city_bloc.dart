@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vizor/src/core/utils.dart';
 
+import '../../../core/utils.dart';
 import '../data/city_repository.dart';
 import '../models/city.dart';
 
@@ -28,16 +28,21 @@ class CityBloc extends Bloc<CityEvent, CityState> {
     GetCities event,
     Emitter<CityState> emit,
   ) async {
-    cities = await _repository.getCities();
-    final selectedCity = cities.firstWhereOrNull((city) {
-          return city.id == _repository.getCity();
-        }) ??
-        City();
+    try {
+      cities = await _repository.getCities();
+      final selectedCity = cities.firstWhereOrNull((city) {
+            return city.id == _repository.getCity();
+          }) ??
+          City();
 
-    emit(CityLoaded(
-      cities: cities,
-      selectedCity: selectedCity,
-    ));
+      emit(CityLoaded(
+        cities: cities,
+        selectedCity: selectedCity,
+      ));
+    } catch (e) {
+      logger(e);
+      emit(CityError(error: e.toString()));
+    }
   }
 
   void _selectCity(
