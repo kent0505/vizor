@@ -15,13 +15,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         super(AuthInitial()) {
     on<AuthEvent>(
       (event, emit) => switch (event) {
-        SendCodeEvent() => _onSendCodeEvent(event, emit),
-        LoginEvent() => _onLoginEvent(event, emit),
+        SendCodeEvent() => _sendCodeEvent(event, emit),
+        LoginEvent() => _loginEvent(event, emit),
+        LogoutEvent() => _logoutEvent(event, emit),
       },
     );
   }
 
-  void _onSendCodeEvent(
+  void _sendCodeEvent(
     SendCodeEvent event,
     Emitter<AuthState> emit,
   ) async {
@@ -34,7 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onLoginEvent(
+  void _loginEvent(
     LoginEvent event,
     Emitter<AuthState> emit,
   ) async {
@@ -49,5 +50,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       logger(e);
       emit(AuthError(error: e.toString()));
     }
+  }
+
+  void _logoutEvent(
+    LogoutEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    await _repository.logout();
+    emit(AuthInitial());
   }
 }

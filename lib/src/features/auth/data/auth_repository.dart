@@ -14,6 +14,7 @@ abstract interface class AuthRepository {
     String phone,
     String code,
   );
+  Future<void> logout();
 }
 
 final class AuthRepositoryImpl implements AuthRepository {
@@ -72,5 +73,12 @@ final class AuthRepositoryImpl implements AuthRepository {
     }
 
     throw Exception(response.data['detail']);
+  }
+
+  @override
+  Future<void> logout() async {
+    await _prefs.remove(Keys.token);
+    await _prefs.remove(Keys.role);
+    await _prefs.remove(Keys.city);
   }
 }

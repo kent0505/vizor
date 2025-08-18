@@ -18,3 +18,5 @@ final class LoginEvent extends AuthEvent {
   final String phone;
   final String code;
 }
+
+final class LogoutEvent extends AuthEvent {}
