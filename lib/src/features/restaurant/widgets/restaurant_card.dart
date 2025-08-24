@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/utils.dart';
 import '../../../core/widgets/button.dart';
 import '../../../core/widgets/image_widget.dart';
 import '../models/restaurant.dart';
+import '../screens/restaurant_detail_screen.dart';
 
 class RestaurantCard extends StatelessWidget {
   const RestaurantCard({super.key, required this.restaurant});
@@ -21,7 +23,11 @@ class RestaurantCard extends StatelessWidget {
       ),
       child: Button(
         onPressed: () {
-          logger(restaurant.toJson());
+          // logger(restaurant.toJson());
+          context.push(
+            RestaurantDetailScreen.routePath,
+            extra: restaurant,
+          );
         },
         child: Row(
           children: [

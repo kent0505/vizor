@@ -4,7 +4,8 @@ class Restaurant {
     required this.title,
     required this.phone,
     required this.address,
-    required this.latlon,
+    required this.lat,
+    required this.lon,
     required this.hours,
     required this.city,
     this.position,
@@ -16,7 +17,8 @@ class Restaurant {
   final String title;
   final String phone;
   final String address;
-  final String latlon;
+  final String lat;
+  final String lon;
   final String hours;
   final int city;
   final int? position;
@@ -29,7 +31,8 @@ class Restaurant {
       title: json['title'],
       phone: json['phone'],
       address: json['address'],
-      latlon: json['latlon'],
+      lat: json['lat'],
+      lon: json['lon'],
       hours: json['hours'],
       position: json['position'],
       city: json['city'],
@@ -44,7 +47,8 @@ class Restaurant {
       'title': title,
       'phone': phone,
       'address': address,
-      'latlon': latlon,
+      'lat': lat,
+      'lon': lon,
       'hours': hours,
       'position': position,
       'city': city,

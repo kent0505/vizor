@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -29,25 +27,25 @@ class _AuthScreenState extends State<AuthScreen> {
 
   bool code = false;
 
-  Timer? timer;
+  // Timer? timer;
 
-  int seconds = 0;
+  // int seconds = 0;
 
-  void startTimer() {
-    setState(() {
-      seconds = 60;
-    });
-    timer?.cancel();
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (seconds == 0) {
-        timer.cancel();
-      } else {
-        setState(() {
-          seconds--;
-        });
-      }
-    });
-  }
+  // void startTimer() {
+  //   setState(() {
+  //     seconds = 60;
+  //   });
+  //   timer?.cancel();
+  //   timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+  //     if (seconds == 0) {
+  //       timer.cancel();
+  //     } else {
+  //       setState(() {
+  //         seconds--;
+  //       });
+  //     }
+  //   });
+  // }
 
   void onContinue() {
     final bloc = context.read<AuthBloc>();
@@ -57,26 +55,26 @@ class _AuthScreenState extends State<AuthScreen> {
         code: codeController.text,
       ));
     } else {
-      bloc.add(SendCodeEvent(phone: phoneController.text));
+      // bloc.add(SendCodeEvent(phone: phoneController.text));
       setState(() {
         code = true;
       });
-      startTimer();
+      // startTimer();
     }
   }
 
-  void onResend() {
-    final bloc = context.read<AuthBloc>();
-    bloc.add(SendCodeEvent(phone: phoneController.text));
-    codeController.clear();
-    startTimer();
-  }
+  // void onResend() {
+  //   final bloc = context.read<AuthBloc>();
+  //   bloc.add(SendCodeEvent(phone: phoneController.text));
+  //   codeController.clear();
+  // startTimer();
+  // }
 
   void onCancel() {
     setState(() {
       code = false;
-      timer?.cancel();
-      seconds = 0;
+      // timer?.cancel();
+      // seconds = 0;
       codeController.clear();
     });
   }
@@ -85,7 +83,7 @@ class _AuthScreenState extends State<AuthScreen> {
   void dispose() {
     phoneController.dispose();
     codeController.dispose();
-    timer?.cancel();
+    // timer?.cancel();
     super.dispose();
   }
 
@@ -148,27 +146,27 @@ class _AuthScreenState extends State<AuthScreen> {
                   title: code ? 'Verify' : 'Continue',
                   onPressed: onContinue,
                 ),
-                if (code) ...[
-                  const SizedBox(height: 10),
-                  seconds > 0
-                      ? SizedBox(
-                          height: 44,
-                          child: Center(
-                            child: Text(
-                              "Resend code in ${seconds}s",
-                              style: const TextStyle(color: Colors.grey),
-                            ),
-                          ),
-                        )
-                      : Button(
-                          onPressed: onResend,
-                          child: const Text(
-                            'Resend Code',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                ],
-                const SizedBox(height: 44),
+                // if (code) ...[
+                //   const SizedBox(height: 10),
+                //   seconds > 0
+                //       ? SizedBox(
+                //           height: 44,
+                //           child: Center(
+                //             child: Text(
+                //               "Resend code in ${seconds}s",
+                //               style: const TextStyle(color: Colors.grey),
+                //             ),
+                //           ),
+                //         )
+                //       : Button(
+                //           onPressed: onResend,
+                //           child: const Text(
+                //             'Resend Code',
+                //             style: TextStyle(color: Colors.black),
+                //           ),
+                //         ),
+                // ],
+
                 const Spacer(),
               ],
             );
